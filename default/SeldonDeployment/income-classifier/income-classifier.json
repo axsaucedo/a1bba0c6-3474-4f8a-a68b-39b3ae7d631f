@@ -6,6 +6,7 @@
         "namespace": "default",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "a1bba0c6-3474-4f8a-a68b-39b3ae7d631f-default",
             "fluentd": "true"
         }
     },
@@ -14,39 +15,6 @@
         "predictors": [
             {
                 "name": "default",
-                "graph": {
-                    "name": "income-classifier-container",
-                    "implementation": "SKLEARN_SERVER",
-                    "modelUri": "gs://seldon-models/v1.11.2/sklearn/iris",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2022-02-01T15:54:05Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "income-classifier-container",
-                                    "resources": {}
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "project.seldon.io/income-classifier-container": "default"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 90
-            },
-            {
-                "name": "canary",
                 "graph": {
                     "name": "income-classifier-container",
                     "implementation": "XGBOOST_SERVER",
@@ -72,12 +40,14 @@
                 ],
                 "replicas": 1,
                 "annotations": {
-                    "project.seldon.io/income-classifier-container": "default",
-                    "seldon.io/canary": "true"
+                    "project.seldon.io/income-classifier-container": "default"
                 },
                 "engineResources": {},
+                "labels": {
+                    "version": "default"
+                },
                 "svcOrchSpec": {},
-                "traffic": 10
+                "traffic": 100
             }
         ],
         "annotations": {
